@@ -1,6 +1,6 @@
 plataformInit();
 function goHome() {
-    window.location.href = "home.html";
+    window.location.href = "Home.html";
 }
 
 function goDetail(){

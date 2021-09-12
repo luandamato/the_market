@@ -137,12 +137,12 @@ module.exports = {
                     pass: email_password_get.password_data
                 }
             });
-            var otp = Math.floor(Math.random() * 10000);
+            //var otp = Math.floor(Math.random() * 10000);
             var mailOptions = {
                 from: email_password_get.email_data,
                 to: data.email,
                 subject: "Código de verificação TheMarket",
-                text: "Seu código é: " + otp + ' '
+                text: "Seu código é: " + data.codigo + ' '
             };
 
 
@@ -154,13 +154,13 @@ module.exports = {
                     console.log('Email sent: ' + info.response);
                 }
             });
-            var update_otp = await User.update({
-                codigo: otp,
-            }, {
-                where: {
-                    id: data.id
-                }
-            });
+            // var update_otp = await User.update({
+            //     codigo: otp,
+            // }, {
+            //     where: {
+            //         id: data.id
+            //     }
+            // });
 
             return transporter;
 
