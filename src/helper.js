@@ -170,4 +170,8 @@ module.exports = {
         }
 
     },
+
+    getBoolValue: function(string){
+        return string === 'true';
+    }
 }

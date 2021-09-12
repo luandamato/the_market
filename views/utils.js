@@ -7,6 +7,10 @@ function goDetail(){
     window.location.href = "ProdutoDetalhe.html";
 }
 
+function alertPadrao(){
+    alert("utils")
+}
+
 function cancelRegister(){
     var result = confirm("Ao cancelar você perderá seu progresso. \nDeseja cancelar?")
     if (result){
