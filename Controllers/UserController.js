@@ -1,5 +1,5 @@
 const User = require('../src/models/User');
-const Op = require('Sequelize').Op
+const Op = require('sequelize').Op
 const helper = require('../src/helper.js');
 
 module.exports = {
