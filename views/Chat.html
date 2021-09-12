@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>TheMarket Chat</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/chat.css">
+	<link rel="stylesheet" type="text/css" href="css/nav.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+	<script src="utils.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+</head>
+<body>
+
+	<nav>
+		<div class="menu-icon">
+		   <span class="fas fa-bars"></span>
+		</div>
+		<div class="logo">
+		   TheMarket
+		</div>
+		<div class="nav-items" id="nav-items">
+		</div>
+		<!-- <img src="./img/add.png" class="add-icon" />
+		<img src="./img/carrinho.png" class="carrinho"/> -->
+		<div class="search-icon">
+		   <span class="fas fa-search"></span>
+		</div>
+		<div class="cancel-icon">
+		   <span class="fas fa-times"></span>
+		</div>
+		<form onsubmit="alertPadrao(search.value)">
+		   <input type="search" class="search-data" placeholder="Search" id="search" name="search" required>
+		   <button type="submit" class="fas fa-search"></button>
+		</form>
+		]<div class="" onclick="logout()">
+			<li><a href="Login.html" id="entrarSair"></a></li>
+		 </div>
+	 </nav>
+
+
+	<form id="chat">
+        <input type="hidden" id="nome" name="username" placeholder="Nome de Usuario">
+        <div class="pessoasConectadas"></div>
+        <div class="container">
+            <div class="messages" id="messages" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);"></div>
+            <div class="previewImage" id="previewImage" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                <button type="button" class="btnFecharPreview"id="cancelarImagem" onclick="toggle(false)">X</button>
+                <img src="" id="previewImg" class="imgPreview" alt="Prévia da imagem...">
+            </div>
+        </div>
+        <div class="pessoasDigitando"></div>
+        <div class="flexContainer">
+            <input class="inputMessage" type="text" id='msg' name="message" placeholder="Mensagem...">
+             <button type="submit" id="btnEnviar" style="display:none"><img src="data:image/png;base64,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"/ height="40px"></button>
+             <div class="image-upload" id="choseImage">
+               <label for="file-input">
+                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgJiYCwCkE2SgLBFe0DpcI97hYqYmfUSftBQ&usqp=CAU" style="height:40px"/>
+               </label>
+               <input id="file-input" type="file"/>
+             </div>
+         </div>
+
+
+
+    </form>
+     
+
+    <script>
+		var nav = document.getElementById("nav-items");
+		var btn = document.getElementById("entrarSair");
+		if (localStorage.getItem("username")){
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="#">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="AnunciarProduto.html">Anunciar item </a></li><li><a href="Carrinho.html">Meu carrinho </a></li>'
+			btn.innerHTML = 'Sair'
+		}
+		else{
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="SobreNos.html">Sobre Nós</a></li>'
+			btn.innerHTML = 'Login'
+		}
+		const menuBtn = document.querySelector(".menu-icon span");
+		const searchBtn = document.querySelector(".search-icon");
+		const cancelBtn = document.querySelector(".cancel-icon");
+		const items = document.querySelector(".nav-items");
+		const form = document.querySelector("form");
+		menuBtn.onclick = ()=>{
+			items.classList.add("active");
+			menuBtn.classList.add("hide");
+			searchBtn.classList.add("hide");
+			cancelBtn.classList.add("show");
+		}
+		cancelBtn.onclick = ()=>{
+			items.classList.remove("active");
+			menuBtn.classList.remove("hide");
+			searchBtn.classList.remove("hide");
+			cancelBtn.classList.remove("show");
+			form.classList.remove("active");
+			cancelBtn.style.color = "#ff3d00";
+		}
+		searchBtn.onclick = ()=>{
+			form.classList.add("active");
+			searchBtn.classList.add("hide");
+			cancelBtn.classList.add("show");
+		}
+	</script>
+	<script src="chat.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

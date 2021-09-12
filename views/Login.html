@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+    <meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/nav.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+	<script src="utils.js"></script>
+    <script src="home.js"></script>
+</head>
+<body>
+
+	<nav>
+		<div class="menu-icon">
+		   <span class="fas fa-bars"></span>
+		</div>
+		<div class="logo">
+		   TheMarket
+		</div>
+		<div class="nav-items" id="nav-items">
+		</div>
+		<!-- <img src="./img/add.png" class="add-icon" />
+		<img src="./img/carrinho.png" class="carrinho"/> -->
+		<div class="search-icon">
+		   <span class="fas fa-search"></span>
+		</div>
+		<div class="cancel-icon">
+		   <span class="fas fa-times"></span>
+		</div>
+		<form onsubmit="alertPadrao(search.value)">
+		   <input type="search" class="search-data" placeholder="Search" id="search" name="search" required>
+		   <button type="submit" class="fas fa-search"></button>
+		</form>
+		]<div class="" onclick="logout()">
+			<li><a href="Login.html" id="entrarSair"></a></li>
+		 </div>
+	 </nav>
+
+     <div class="formulario">
+        <p>Usuário: <br/><input type="text" name="username" id="username" required/></p>
+        <p>Senha: <br/><input type="password" name="senha" id="senha" required/></p>
+        <button class="botao" onclick="login()">Login</button>
+        <p><a href="Registro.html">Não tenho conta</a></p>
+	 </div>
+
+
+
+	 <script>
+		var nav = document.getElementById("nav-items");
+		var btn = document.getElementById("entrarSair");
+		if (localStorage.getItem("username")){
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="Chat.html">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="AnunciarProduto.html">Anunciar item </a></li><li><a href="Carrinho.html">Meu carrinho </a></li>'
+			btn.innerHTML = 'Sair'
+		}
+		else{
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="SobreNos.html">Sobre Nós</a></li>'
+			btn.innerHTML = 'Login'
+		}
+		const menuBtn = document.querySelector(".menu-icon span");
+		const searchBtn = document.querySelector(".search-icon");
+		const cancelBtn = document.querySelector(".cancel-icon");
+		const items = document.querySelector(".nav-items");
+		const form = document.querySelector("form");
+		menuBtn.onclick = ()=>{
+			items.classList.add("active");
+			menuBtn.classList.add("hide");
+			searchBtn.classList.add("hide");
+			cancelBtn.classList.add("show");
+		}
+		cancelBtn.onclick = ()=>{
+			items.classList.remove("active");
+			menuBtn.classList.remove("hide");
+			searchBtn.classList.remove("hide");
+			cancelBtn.classList.remove("show");
+			form.classList.remove("active");
+			cancelBtn.style.color = "#ff3d00";
+		}
+		searchBtn.onclick = ()=>{
+			form.classList.add("active");
+			searchBtn.classList.add("hide");
+			cancelBtn.classList.add("show");
+		}
+	</script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

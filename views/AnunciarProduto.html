@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Account Settings</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/nav.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+	<script src="utils.js"></script>
+</head>
+<body>
+
+	<nav>
+		<div class="menu-icon">
+		   <span class="fas fa-bars"></span>
+		</div>
+		<div class="logo">
+		   TheMarket
+		</div>
+		<div class="nav-items" id="nav-items">
+		</div>
+		<!-- <img src="./img/add.png" class="add-icon" />
+		<img src="./img/carrinho.png" class="carrinho"/> -->
+		<div class="search-icon">
+		   <span class="fas fa-search"></span>
+		</div>
+		<div class="cancel-icon">
+		   <span class="fas fa-times"></span>
+		</div>
+		<form onsubmit="alertPadrao(search.value)">
+		   <input type="search" class="search-data" placeholder="Search" id="search" name="search" required>
+		   <button type="submit" class="fas fa-search"></button>
+		</form>
+		]<div class="" onclick="logout()">
+			<li><a href="Login.html" id="entrarSair"></a></li>
+		 </div>
+	 </nav>
+
+
+	<section class="py-2 my-2">
+		<div class="container">
+			<h1 class="mb-2">Anunciar Item</h1>
+			<div class="bg-white shadow rounded-lg d-block d-sm-flex" style="padding: 30px;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							  <label>Titulo do anúncio</label>
+							  <input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							  <label>Preço</label>
+							  <input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Opções de tamanho</label>
+							<div>
+								<input type = "checkbox" id = "Desativado" name = "tamanho" value = "Desativado">
+								<label for = "Desativado"> Desativado </label>
+							</div>
+							<div>
+								<input type = "checkbox" id = "GG" name = "tamanho" value = "GG">
+								<label for = "GG"> GG </label>
+							</div>
+							<div>
+								<input type = "checkbox" id = "G" name = "tamanho" value = "G">
+								<label for = "G"> G </label>
+							</div>
+							<div>
+								<input type = "checkbox" id = "M" name = "tamanho" value = "M">
+								<label for = "M"> M </label>
+							</div>
+							<div>
+								<input type = "checkbox" id = "P" name = "tamanho" value = "P">
+								<label for = "P"> P </label>
+							</div>
+							<div>
+								<input type = "checkbox" id = "PP" name = "tamanho" value = "PP">
+								<label for = "PP"> PP </label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							  <label>Desativar anuncio ao vender?</label>
+							  <div>
+								<input type="radio" name="desativar" value="true"> Sim
+							  </div>
+							  <div>
+								<input type="radio" name="desativar" value="false"> Não
+							  </div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							  <label>Descrição</label>
+							<textarea class="form-control" rows="3"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Fotos</label>
+							<div id="dropContainer" class="uplaod-file">
+								<div style="margin:10px 0;">
+									imagem 1 <input type="file" name="myImage" accept="image/*" multiple/> 
+								</div>
+								<div style="margin: 10px 0;">
+									imagem 2 <input type="file" name="myImage" accept="image/*" multiple/> 
+								</div>
+								<div style="margin:10px 0;">
+									imagem 3 <input type="file" name="myImage" accept="image/*" multiple/> 
+								</div>
+							</div>
+							  
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+     
+
+	<script>
+		var nav = document.getElementById("nav-items");
+		var btn = document.getElementById("entrarSair");
+		if (localStorage.getItem("username")){
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="Chat.html">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="#">Anunciar item </a></li><li><a href="Carrinho.html">Meu carrinho </a></li>'
+			btn.innerHTML = 'Sair'
+		}
+		else{
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="SobreNos.html">Sobre Nós</a></li>'
+			btn.innerHTML = 'Login'
+		}
+		const menuBtn = document.querySelector(".menu-icon span");
+		const searchBtn = document.querySelector(".search-icon");
+		const cancelBtn = document.querySelector(".cancel-icon");
+		const items = document.querySelector(".nav-items");
+		const form = document.querySelector("form");
+		menuBtn.onclick = ()=>{
+			items.classList.add("active");
+			menuBtn.classList.add("hide");
+			searchBtn.classList.add("hide");
+			cancelBtn.classList.add("show");
+		}
+		cancelBtn.onclick = ()=>{
+			items.classList.remove("active");
+			menuBtn.classList.remove("hide");
+			searchBtn.classList.remove("hide");
+			cancelBtn.classList.remove("show");
+			form.classList.remove("active");
+			cancelBtn.style.color = "#ff3d00";
+		}
+		searchBtn.onclick = ()=>{
+			form.classList.add("active");
+			searchBtn.classList.add("hide");
+			cancelBtn.classList.add("show");
+		}
+	</script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

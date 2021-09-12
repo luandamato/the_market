@@ -1,0 +1,26 @@
+{
+  "name": "themarket",
+  "version": "1.0.0",
+  "description": "ecommerce",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server,js"
+  },
+  "keywords": [
+    "teste"
+  ],
+  "author": "Luan",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "nodemailer": "^6.6.3",
+    "request": "^2.88.2",
+    "sequelize": "^6.6.5",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  }
+}

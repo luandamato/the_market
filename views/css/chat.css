@@ -1,0 +1,183 @@
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+#chat {
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inputNome {
+  width: 100%;
+  border: 1px solid #ddd;
+  height: 50px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.inputMessage{
+  width: 100%;
+  border: 1px solid #ddd;
+  height: 50px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.flexContainer {
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.image-upload>input {
+  display: none;
+}
+
+
+.btnEnviar {
+  width: 80%;
+  height: 50px;
+  font-size: 14px;
+  background: #069;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  color: #FFF;
+  margin-top: 10px;
+}
+
+
+.container{
+  width: 100%;
+  height: 80%;
+  position: relative;
+}
+
+.messages {
+  width: 100%;
+  height: 100%;            
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #ddd;
+  padding: 20px;
+  overflow:auto;
+  overflow-x:hidden;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;            
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #ddd;
+  padding: 20px;
+  z-index: 110;
+  margin: auto;
+  display: none;
+  background-color: rgba(119, 125, 128, 0.85);
+  text-align: center;
+}
+
+
+.btnFecharPreview {
+  display: flex; 
+  justify-content: flex-end;
+  font-size: 20px;
+}
+
+.imgPreview{
+  max-width: 60%;
+  max-height: 60%;
+  margin-top: 20px;
+}
+
+.messageEnviada {
+  display: flex; 
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.message {
+  background-color: greenyellow;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 50px;
+  margin-bottom: 5px;
+  padding: 8px;
+  display:inline-block;
+  word-wrap: break-word;
+}
+.messageImg {
+  background-color: greenyellow;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 50px;
+  margin-bottom: 5px;
+  padding: 3px;
+  display:inline-block;
+  word-wrap: break-word;
+}
+
+
+.novoUsuario {
+  text-align: center;
+  background-color: lightblue;
+  width: 100px;
+  margin: 20px auto;
+  border-radius: 25px;
+}
+
+.pessoasConectadas, .pessoasDigitando{
+  width: 80%;
+  font-size: 15px;
+  padding: 2px;
+  margin:0;
+  text-align: left;
+}
+
+.img{
+  max-height: 250px;
+  max-width: 250px;
+}
+
+.inputMessage {
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  z-index: 1;
+  max-height: 100px;
+  min-height: 20px;
+  padding: 0 0 0 2px;
+  outline: 0;
+  transition: 0.2s padding ease-in-out;
+}
+
+#fileInput{
+  position: absolute;
+  display: block;
+  opacity: 1;
+  width: 70%;
+  height: 60%;
+
+ }

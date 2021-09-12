@@ -1,0 +1,80 @@
+#produtos{
+  max-width: 70%;
+  margin: 50px auto;
+  padding: 0 2%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.produto-single{
+  width: 25%;
+  padding: 0 20px;
+  
+}
+
+.img-produto{
+  width: 100%;
+  height: 300px;
+}
+
+.uplaod-file{
+  border: 1px solid #f00533; 
+  height: 200px; 
+  width: 100%; 
+  padding:15px; 
+  border-radius:5px;
+}
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+body {
+	background: #f9f9f9;
+	font-family: "Roboto", sans-serif;
+}
+
+.shadow {
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-tab-nav {
+	min-width: 250px;
+}
+
+.tab-content {
+	flex: 1;
+}
+
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+body{
+  background: #f2f2f2;
+}
+
+.formulario {
+  float: center;
+  background-color: var(--bg2);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  border: 1px solid #ff523b;
+  margin: 50px auto;
+  padding: 25px;
+}
+
+
+.botao {
+  border: 0;
+  border-radius: 20px;
+  background-color: #ff523b;
+  padding: 10px 0px;
+  width: 100%;
+}
+
