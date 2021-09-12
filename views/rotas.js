@@ -9,6 +9,6 @@ module.exports = {
 
     async json(req, res) {
         console.log('json')
-        res.json({nome: req.params.nome});
+        res.json({nome: "Luan"});
     }
 }

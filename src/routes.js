@@ -5,6 +5,7 @@ const userController = require('../Controllers/UserController')
 const routes  = express.Router();
 
 routes.get('/', views.home);
+routes.get('/json', views.json);
 routes.post('/user', userController.cadastrar)
 routes.post('/getUser', userController.getUser)
 routes.post('/login', userController.login)
