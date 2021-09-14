@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Account Settings</title>
+	<title>Anunciar Produto</title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -50,16 +50,16 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							  <label>Titulo do anúncio</label>
-							  <input type="text" class="form-control">
+							  <input type="text" class="form-control" id="nome">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							  <label>Preço</label>
-							  <input type="text" class="form-control">
+							  <input type="text" class="form-control"id="preco">
 						</div>
 					</div>
-					<div class="col-md-6">
+					<!-- <div class="col-md-6">
 						<div class="form-group">
 							<label>Opções de tamanho</label>
 							<div>
@@ -87,22 +87,33 @@
 								<label for = "PP"> PP </label>
 							</div>
 						</div>
+					</div> -->
+					<div class="col-md-6">
+						<div class="form-group">
+							  <label>O produto é:</label>
+							  <div>
+								<input type="radio" name="usado" value="false"> Novo
+							  </div>
+							  <div>
+								<input type="radio" name="usado" value="true"> Usado
+							  </div>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							  <label>Desativar anuncio ao vender?</label>
 							  <div>
-								<input type="radio" name="desativar" value="true"> Sim
+								<input type="radio" name="desativar_ao_vender" value="true"> Sim
 							  </div>
 							  <div>
-								<input type="radio" name="desativar" value="false"> Não
+								<input type="radio" name="desativar_ao_vender" value="false"> Não
 							  </div>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
 							  <label>Descrição</label>
-							<textarea class="form-control" rows="3"></textarea>
+							<textarea class="form-control" rows="3" id="descricao"></textarea>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -110,18 +121,19 @@
 							<label>Fotos</label>
 							<div id="dropContainer" class="uplaod-file">
 								<div style="margin:10px 0;">
-									imagem 1 <input type="file" name="myImage" accept="image/*" multiple/> 
+									imagem 1 <input type="file" name="myImage" accept="image/*" id="img1" multiple/> 
 								</div>
 								<div style="margin: 10px 0;">
-									imagem 2 <input type="file" name="myImage" accept="image/*" multiple/> 
+									imagem 2 <input type="file" name="myImage" accept="image/*" id="img2" multiple/> 
 								</div>
 								<div style="margin:10px 0;">
-									imagem 3 <input type="file" name="myImage" accept="image/*" multiple/> 
+									imagem 3 <input type="file" name="myImage" accept="image/*" id="img3" multiple/> 
 								</div>
 							</div>
 							  
 						</div>
 					</div>
+					<button class="btn btn-primary" style="float: right" onclick="cadastrarProduto()">Concluir</button>
 				</div>
 			</div>
 		</div>

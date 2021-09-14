@@ -3,8 +3,12 @@ function goHome() {
     window.location.href = "Home.html";
 }
 
-function goDetail(){
-    window.location.href = "ProdutoDetalhe.html";
+function goDetail(id){
+    window.location.href = "ProdutoDetalhe.html?produtoId="+id;
+}
+
+function goProfile(id){
+    window.location.href = "Perfil.html?userId="+id;
 }
 
 function alertPadrao(){
@@ -67,7 +71,6 @@ function register(){
 
     }
     callApiPost('/user',  body, function(response){
-        console.log(response)
         setUser(response.data);
         saveData("username", response.data.nome);
         saveData("userId", response.data.id);
@@ -80,7 +83,6 @@ function login(){
     var senha = document.getElementById("senha").value;
     var body = {username, senha}
     callApiPost('/login', body, function(response){
-        console.log(response)
         if (response.data.user.id){
             setUser(response.data.user);
             saveData("username", response.data.user.nome);
@@ -103,8 +105,8 @@ function plataformInit(){
     var id = user.id;
     var body = {id}
     callApiPost('/getUser', body, function(response){
-        console.log(response)
         if (response.data.user.id){
+            setUser(response.data.user)
             if (!response.data.user.email_validado){
                 enviarEmailValidacao();
             }
@@ -122,7 +124,6 @@ function enviarEmailValidacao(){
     var id = user.id;
     var body = {id}
     callApiPost('/enviarEmailValidacao', body, function(response){
-        console.log(response)
         let codigo = "";
         while(codigo.length < 3){
             codigo = prompt("Insira o código enviado para '"+user.email+"' de 'themarketlab0001@gmail.com'")
@@ -150,7 +151,6 @@ function saveData(key, value){
 
 function setUser(user){
     //alert("salvando "+value+"como "+key)
-    console.log(JSON.stringify(user));
     localStorage.setItem("user", JSON.stringify(user));
 }
 
@@ -167,7 +167,6 @@ function getData(key){
 }
 
 function callApiPost(url, body, callback){
-    console.log(JSON.stringify(body))
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.responseType = 'json';
@@ -187,7 +186,6 @@ function callApiPost(url, body, callback){
 }
 
 function callApiGet(url, body, callback){
-    console.log(JSON.stringify(body))
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onload = function(){

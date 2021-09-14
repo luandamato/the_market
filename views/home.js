@@ -1,28 +1,64 @@
-var itens = [
-    {
-        id: '0',
-        nome: 'camiseta',
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkL9dpnzYBMZcCDunEwKMnmPkQioUKOiisdg&usqp=CAU',
-        quantidade: '0'
-    },
-    {
-        id: '1',
-        nome: 'short',
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROI274TIa55J22WFMfjpxGZILDIrk6zCXjvA&usqp=CAU',
-        quantidade: '0'
-    },
-    {
-        id: '2',
-        nome: 'calça',
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzEN-KJSGJGCZw2yDluY5qmvITJ6_-XmZtWA&usqp=CAU',
-        quantidade: '0'
-    }
-];
 
-carregarHome = ()=>{
+function carregarHome(){
+
+    callApiGet('/produtos', function(response){
+        addProducts(response.data.produtos);
+    });
+
+}
+
+function addProducts(products){
     var containerProdutos = document.getElementById("produtos")
-    itens.map((val)=>{
-        containerProdutos.innerHTML += '<div class="produto-single"> <img class="img-produto" src="'+val.img+'"/> <p>'+val.nome+'</p> <a id="addCarrinho" key="'+val.id+'"></a href="">Adicionar ao carrinho</a> </div>';
+    if (products.length <1){
+        containerProdutos.innerHTML += '<h1>Nenhum produto cadastrado</h1>'
+        return;
+    }
+    products.map((val)=>{
+        var usado = "";
+        if (val.usado){
+            usado = "Semi-novo"
+        }
+        var img = "./img/produto.png";
+        if (val.imagem){
+            img = val.imagem
+        }
+        containerProdutos.innerHTML += ''+
+            '<div class="card" onclick="goDetail('+val.id+')">'+
+			'<img class="img-produto" src="'+ img +'"/>'+
+			'<span class="desconto">'+ usado +'</span>'+
+			'<div class="panel">'+
+				'<a href="#" class="fas fa-heart"></a>'+
+				'<a href="#" class="fas fa-share"></a>'+
+				'<a href="#" class="fas fa-search"></a>'+
+			'</div>'+
+			'<a href="#"><button>Adicionar ao carrinho</button></a>'+
+			'<div class="info">'+
+				'<h3>'+ val.nome +'</h3>'+
+				'<div class="stars">'+
+					'<i class="fas fa-star"></i>'+
+					'<i class="fas fa-star"></i>'+
+					'<i class="fas fa-star"></i>'+
+					'<i class="fas fa-star"></i>'+
+					'<i class="fas fa-star-half-alt"></i>'+
+				'</div>'+
+				'<strong class="preco"> R$ '+ val.preco +' </strong>'+
+			'</div>'+
+		'</div>';
     })
 }
 
+carregarHome()
+
+function callApiGet(url, callback){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            callback(JSON.parse(xhr.response));
+        } else {
+            //TODO: tratar os possíveis erros
+            alert("ERRO: "+xhr.status);
+        }
+    }
+    xhr.send();
+}

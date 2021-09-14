@@ -60,12 +60,12 @@ module.exports = {
     async getUser(req, res){
         try{
             const required = {
-                id: req.body.id
+                id: req.params.id
             };
             const non_required = {};
             let requestdata = await helper.vaildObject(required, non_required, res);
 
-            const { id } = req.body;
+            const { id } = req.params;
             const user = await User.findOne({
                 where:{
                     id,

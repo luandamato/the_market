@@ -12,14 +12,13 @@ module.exports = {
                 preco: req.body.preco,
                 usado: req.body.usado,
                 desativar_ao_vender: req.body.desativar_ao_vender,
-                anunciante_id: req.body.anunciante_id,
-                ativo: req.body.ativo
+                anunciante_id: req.body.anunciante_id
             };
             const non_required = {};
             let requestdata = await helper.vaildObject(required, non_required, res);
 
-            var { nome, descricao, preco, usado, desativar_ao_vender, anunciante_id, ativo } = req.body;
-            console.log(nome, descricao, preco, usado, desativar_ao_vender, anunciante_id, ativo)
+            var { nome, descricao, preco, usado, desativar_ao_vender, anunciante_id } = req.body;
+            console.log(nome, descricao, preco, usado, desativar_ao_vender, anunciante_id)
 
             const user = await User.findByPk(anunciante_id);
 
@@ -29,7 +28,7 @@ module.exports = {
             
             usado = helper.getBoolValue(usado);
             desativar_ao_vender = helper.getBoolValue(desativar_ao_vender);
-            ativo = helper.getBoolValue(ativo);
+            ativo = true
             const produto = await Produto.create({ nome, descricao, preco, usado, desativar_ao_vender, anunciante_id, ativo });
     
             let msg = "sucesso";
@@ -51,70 +50,45 @@ module.exports = {
         let body = {user};
         return helper.true_status(res, body, msg);
     },
-    async getUser(req, res){
+    async produtos(req, res){
         try{
-            const required = {
-                id: req.body.id
-            };
-            const non_required = {};
-            let requestdata = await helper.vaildObject(required, non_required, res);
-
-            const { id } = req.body;
-            const user = await User.findOne({
-                where:{
-                    id,
-                }
+            const produtos = await Produto.findAll({
+                //include: [{association: "user"}],
+                order: [["created_at", "DESC"]]
             })
     
-            if (user){
+            if (produtos){
                 let msg = "sucesso";
-                let body = {user: user};
+                let body = {produtos};
                 return helper.true_status(res, body, msg);
             }
             else{
-                return helper.false_status(res, "Usuário não encontrado");
+                return helper.false_status(res, "Nenhum produto encontrado :(");
             }
         } catch (error) {
             throw error
         }
         
     },
-    async login(req, res){
+    async produto(req, res){
         try{
             const required = {
-                username: req.body.username,
-                senha: req.body.senha
+                id: req.params.id
             };
             const non_required = {};
             let requestdata = await helper.vaildObject(required, non_required, res);
-
-            const { username, senha } = req.body;
-            let crip = await helper.criptografar(senha);
-            const user = await User.findOne({
-                where:{
-                    senha: crip,
-                    [Op.or]: [
-                        {
-                            username: {
-                                [Op.eq]: username
-                            }
-                        },
-                        {
-                            email: {
-                                [Op.eq]: username
-                            }
-                        }
-                    ]
-                }
-            })
+            const { id } = req.params;
+            const produto = await Produto.findByPk(id, 
+                {include: {association: "user"}
+            });
     
-            if (user){
+            if (produto){
                 let msg = "sucesso";
-                let body = {user: user};
+                let body = {produto};
                 return helper.true_status(res, body, msg);
             }
             else{
-                return helper.false_status(res, "Usuário não encontrado");
+                return helper.false_status(res, "Nenhum produto encontrado :(");
             }
         } catch (error) {
             throw error

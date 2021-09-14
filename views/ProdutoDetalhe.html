@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Account Settings</title>
+	<title>Deatelhe do produto</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="css/home.css">
 	<link rel="stylesheet" type="text/css" href="css/nav.css">
 	<script src="utils.js"></script>
+	<script src="produtos.js"></script>
 </head>
 <body>
 	<nav>
@@ -40,8 +41,8 @@
 	 </nav>
 
 	<div class="small-container single-product">
-		<div class="row">
-			<div class="col-2">
+		<div class="row" id="produto">
+			<!-- <div class="col-2">
 				<img src = "data:image/jpeg;base64,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" width="100%" id="productImg">
 				<div class="small-img-row">
 					<div class="small-img-col">
@@ -66,20 +67,23 @@
 					<option>P</option>
 					<option>PP</option>
 				</select>
+				<h5>Produto novo</h4>
 				<input type="number" value="1">
-				<a href="" class="btn">Adicionar ao carrinho</a>
+				<a href="" class="btn">Comprar</a>
 				<h3>Detalhes<i class="fa fa-indent"></i></h3>
 				<br>
 				<p id="detalhe">Camiseta Unissex Gola Redonda 100% poliéster fabricada com material de ótima qualidade.Estampa sublimática de alta qualidade e definição; não desbota e não solta tinta. Cor: Cinza Mescla.O tamanho da estampa é baseada numa folha padrão A4. A) MEDIDAS CAMISETA UNISSEX GOLA REDONDATamanho P: Comprimento: 66cm / Largura: 51,5cm.Tamanho M: Comprimento: 68,5cm / Largura: 54cm.Tamanho G: Comprimento: 71,5cm / Largura: 56,5cm.Tamanho GG: Comprimento: 73,5cm / Largura: 59cm.</p>
 				<br><br>
-				<p id="anunciante">Anunciado por: <a href="Perfil.html">TESTE</a></p>
-			</div>
+				<div onclick="goProfile(2)">
+					<p id="anunciante">Anunciado por: <a href=""></a>TESTE</a></p>
+				</div>
+			</div> -->
 		</div>
 	</div>
 
 	<h3 id="produtosRelacionados">Produtos Relacionados</h3>
 	<div class="produtos" id="produtos">
-		<div class="card" onclick="goDetail()">
+		<div class="card" onclick="goDetail(4)">
 			<img class="img-produto" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROI274TIa55J22WFMfjpxGZILDIrk6zCXjvA&usqp=CAU"/> 
 			<span class="desconto">-20%</span>
 			<div class="panel">
@@ -100,7 +104,7 @@
 				<strong class="preco"> R$ 49,90 </strong>
 			</div>
 		</div>
-		<div class="card" onclick="goDetail()">
+		<div class="card" onclick="goDetail(7)">
 			<img class="img-produto" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROI274TIa55J22WFMfjpxGZILDIrk6zCXjvA&usqp=CAU"/> 
 			<span class="desconto"></span>
 			<div class="panel">
@@ -124,6 +128,10 @@
     </div><!--produtos-->
 
      <script>
+		 
+		window.onload = function() {
+			getProduto();
+		};
 		var img = document.getElementById("productImg")
 		var imgs = document.getElementsByClassName("small-img")
 
