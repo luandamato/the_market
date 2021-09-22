@@ -19,8 +19,8 @@ var nome = localStorage.getItem("username");
 //alert("Logado como: "+nome);
 document.getElementById('nome').value = nome;
 
-var socket = io('http://127.0.0.1:4000/');
-//var socket = io('https://the-market-lab.herokuapp.com/');
+// var socket = io('http://127.0.0.1:4000/');
+var socket = io('https://the-market-lab.herokuapp.com/');
 
 function scroll(limit){
     const out = document.getElementById("msg_history")
