@@ -4,6 +4,12 @@
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>TheMarket Chat</title>
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -44,31 +50,125 @@
 	 </nav>
 
 
-	<form id="chat">
-        <input type="hidden" id="nome" name="username" placeholder="Nome de Usuario">
-        <div class="pessoasConectadas"></div>
-        <div class="container">
-            <div class="messages" id="messages" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);"></div>
-            <div class="previewImage" id="previewImage" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
-                <button type="button" class="btnFecharPreview"id="cancelarImagem" onclick="toggle(false)">X</button>
-                <img src="" id="previewImg" class="imgPreview" alt="Prévia da imagem...">
-            </div>
-        </div>
-        <div class="pessoasDigitando"></div>
-        <div class="flexContainer">
-            <input class="inputMessage" type="text" id='msg' name="message" placeholder="Mensagem...">
-             <button type="submit" id="btnEnviar" style="display:none"><img src="data:image/png;base64,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"/ height="40px"></button>
-             <div class="image-upload" id="choseImage">
-               <label for="file-input">
-                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgJiYCwCkE2SgLBFe0DpcI97hYqYmfUSftBQ&usqp=CAU" style="height:40px"/>
-               </label>
-               <input id="file-input" type="file"/>
-             </div>
-         </div>
+	<div class="container">
+		<div class="messaging">
+			  <div class="inbox_msg">
+				<div class="inbox_people">
+				  <div class="headind_srch">
+					<div class="recent_heading">
+					  <h4>Recent</h4>
+					</div>
+					<div class="srch_bar">
+					  <div class="stylish-input-group">
+						<input type="text" class="search-bar"  placeholder="Search" >
+						<span class="input-group-addon">
+						<button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+						</span> </div>
+					</div>
+				  </div>
+				  <div class="inbox_chat">
+					<div class="chat_list active_chat">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+					<div class="chat_list">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+					<div class="chat_list">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+					<div class="chat_list">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+					<div class="chat_list">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+					<div class="chat_list">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+					<div class="chat_list">
+					  <div class="chat_people">
+						<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+						<div class="chat_ib">
+						  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+						  <p>Test, which is a new approach to have all solutions 
+							astrology under one roof.</p>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<form id="chat">
+					<input type="hidden" id="nome" name="username" placeholder="Nome de Usuario">
+					<div class="mesgs">
+						<div class="msg_history" id="msg_history" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);"></div>
+						<div class="previewImage" id="previewImage" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+							<button type="button" class="btnFecharPreview"id="cancelarImagem" onclick="toggle(false)">X</button>
+							<img src="" id="previewImg" class="imgPreview" alt="Prévia da imagem...">
+						</div>
 
-
-
-    </form>
+						<div class="type_msg">
+						  <div class="input_msg_write flexContainer">
+							<input type="text" class="write_msg" placeholder="Mensagem..." id='msg' name="message"/>
+							<button class="msg_send_btn" type="submit" id="btnEnviar" style="display:none"><img src="./img/enviar.png" height="40px"></button>
+							<!-- <button  type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button> -->
+							<div class="image-upload msg_send_btn" id="choseImage">
+								<label for="file-input">
+								  <img src="./img/arquivo.png" style="height:40px"/>
+								</label>
+								<input id="file-input" type="file"/>
+							  </div>
+						  </div>
+						</div>
+					</div>
+				</form>
+				
+			</div>
+			  
+			  
+			</div>
+		</div>
      
 
     <script>

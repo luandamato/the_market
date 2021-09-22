@@ -19,11 +19,11 @@ var nome = localStorage.getItem("username");
 //alert("Logado como: "+nome);
 document.getElementById('nome').value = nome;
 
-//var socket = io('http://127.0.0.1:4000/');
-var socket = io('https://the-market-lab.herokuapp.com/');
+var socket = io('http://127.0.0.1:4000/');
+//var socket = io('https://the-market-lab.herokuapp.com/');
 
 function scroll(limit){
-    const out = document.getElementById("messages")
+    const out = document.getElementById("msg_history")
     //se esta no bottom da div
     const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + limit
 
@@ -34,30 +34,51 @@ function scroll(limit){
 }
 
 function renderMessage(message) {
-    var scrollLimit = 120
+    var scrollLimit = 200
     if (message.id == socket.id){
         if (message.msg){
-            $('.messages').append('<div class="messageEnviada">'+message.msg+'</div>')
+            $('.msg_history').append('<div class="outgoing_msg">'+
+                                        '<div class="sent_msg">'+
+                                            '<p>Test which is a new approach to have all solutions</p>'+
+                                            '<span class="time_date"> 11:01 AM    |    June 9</span> </div>'+
+                                        '</div>')
         }
         else{
-            scrollLimit = 450
-            $('.messages').append('<div class="messageEnviada"><img class="img" style="border-radius: 10px;" src="data:image/png;base64,'+message.img+'" alt="Red dot" /></div>')
+            scrollLimit = 500
+            $('.msg_history').append('<div class="outgoing_msg">'+
+            '<div class="sent_msg">'+
+                '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">'+
+                '<span class="time_date"> 11:01 AM    |    June 9</span> </div>'+
+            '</div>')
         }
     }
     else{
+        var foto = '<div class="incoming_msg">'
         if (ultimoAEnviar != message.nome){
-            $('.messages').append('<div><strong>'+ message.nome +'</strong>: </div>')
+            foto += '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
         }
         if (message.msg){
-            $('.messages').append('<div class="message">'+message.msg+'</div>')
+            $('.msg_history').append(foto+
+            '<div class="received_msg">'+
+                '<div class="received_withd_msg">'+
+                '<p>Test which is a new approach to have all solutions</p>'+
+                '<span class="time_date"> 11:01 AM    |    June 9</span></div>'+
+            '</div>'+
+            '</div>')
         }
         else{
-            scrollLimit = 450
-            $('.messages').append('<div class="messageImg"> <img class="img" style="border-radius: 10px;" src="data:image/png;base64,'+message.img+'" alt="Red dot" /> </div>')
-            
+            scrollLimit = 500
+            $('.msg_history').append(foto+
+                '<div class="received_msg">'+
+                    '<div class="received_withd_msg">'+
+                    '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">'+
+                    '<span class="time_date"> 11:01 AM    |    June 9</span></div>'+
+                '</div>'+
+                '</div>')
         }
-        $('.messages').append('<br>')
+        $('.msg_history').append('<br>')
     }
+    console.log(message)
     ultimoAEnviar = message.nome;
     scroll(scrollLimit)
     
@@ -116,7 +137,7 @@ socket.on('conexoesAnteriores', function(messages){
 
 socket.on('novaConexao', function(message){
     conexoes.push(message)
-    $('.messages').append('<div class="novoUsuario">'+message.nome+' Entrou </div>')
+    $('.msg_history').append('<div class="novoUsuario">'+message.nome+' Entrou </div>')
     ultimoAEnviar = ""
     atualizarPessoasOnline()
 })
@@ -126,7 +147,7 @@ socket.on('desconectado', function(message){
     var i = conexoes.indexOf(element);
     conexoes.splice(i, 1);
     ultimoAEnviar = ""
-    $('.messages').append('<div class="novoUsuario">'+message.nome+' Saiu </div>')
+    $('.msg_history').append('<div class="novoUsuario">'+message.nome+' Saiu </div>')
     atualizarPessoasOnline()
 })
 
@@ -156,10 +177,9 @@ socket.on('mensagensAnteriores', function(messages){
     for (message of messages){
         renderMessage(message)
     }
-    const out = document.getElementById("messages")
+    const out = document.getElementById("msg_history")
     out.scrollTop = out.scrollHeight - out.clientHeight
-
-    
+ 
 })
 
 $('#chat').submit(function(event) {
@@ -273,7 +293,7 @@ function dropHandler(ev) {
 
 function toggle(showImage) {
     var preview = document.getElementById("previewImg");
-    var x = document.getElementById("messages");
+    var x = document.getElementById("msg_history");
     var y = document.getElementById("previewImage");
     var text = document.getElementById("msg");
     if (!showImage) {

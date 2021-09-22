@@ -1,5 +1,16 @@
 function getUser(){
     var userId = getQueryString()["userId"];
+    if (!userId){
+        const user = getUserLogado();
+        if (user){
+            userId = user.id
+        }
+    }
+    if(!userId){
+        alert("Usuário não informado")
+        window.location.href = "Home.html";
+        return;
+    }
     callApiGet('/user/'+userId, function(response){
         addUser(response.data.user);
     });
@@ -14,7 +25,7 @@ function addUser(user){
     }
 
     var editar = "";
-    if (usuarioLogado.id == user.id){
+    if (usuarioLogado && usuarioLogado.id == user.id){
         editar = '<a href="EditarPerfil.html" style="font-size:12px; color:black;">Editar Perfil</a>'
     }
     
@@ -24,7 +35,7 @@ function addUser(user){
             '<div class="card-block text-center text-white">'+
                 '<div class="m-b-25"> <img src="'+ img +'" class="img-radius" alt="User-Profile-Image"> </div>'+
                 '<h6 class="f-w-600">'+ user.username + '</h6>'+
-                '+' + editar +
+                editar +
             '</div>'+
         '</div>'+
         '<div class="col-sm-8">'+
@@ -52,7 +63,7 @@ function addUser(user){
                     '</div>'+
                     '<div class="col-sm-6">'+
                         '<p class="m-b-10 f-w-600">Produtos anunciados</p>'+
-                        '<h6 class="text-muted f-w-400">'+ 0 +'</h6>'+
+                        '<h6 class="text-muted f-w-400">'+ user.qtdProdutos +'</h6>'+
                     '</div>'+
                     '<div class="col-sm-6">'+
                         '<p class="m-b-10 f-w-600">Total de compras</p>'+
@@ -128,7 +139,6 @@ function callApiGet(url, callback){
     xhr.open("GET", url, false);
     xhr.onload = function(){
         if(xhr.status == 200){
-            console.log(xhr)
             callback(JSON.parse(xhr.response));
         } else {
             //TODO: tratar os possíveis erros

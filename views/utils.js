@@ -103,8 +103,7 @@ function plataformInit(){
         return;
     }
     var id = user.id;
-    var body = {id}
-    callApiPost('/getUser', body, function(response){
+    callApiGet('/user/'+id, function(response){
         if (response.data.user.id){
             setUser(response.data.user)
             if (!response.data.user.email_validado){
@@ -185,16 +184,16 @@ function callApiPost(url, body, callback){
     xhr.send(JSON.stringify(body));
 }
 
-function callApiGet(url, body, callback){
+function callApiGet(url, callback){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+    xhr.open("GET", url, false);
     xhr.onload = function(){
         if(xhr.status == 200){
-            callback(xhr.response);
+            callback(JSON.parse(xhr.response));
         } else {
             //TODO: tratar os possíveis erros
             alert("ERRO: "+xhr.status);
         }
     }
-    xhr.send(JSON.stringify(body));
+    xhr.send();
 }

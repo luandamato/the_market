@@ -1,4 +1,5 @@
 const User = require('../src/models/User');
+const Produto = require('../src/models/Produto');
 const Op = require('sequelize').Op
 const helper = require('../src/helper.js');
 
@@ -71,8 +72,16 @@ module.exports = {
                     id,
                 }
             })
+
+            const produtos = await Produto.count({ 
+                where: {
+                    anunciante_id: id
+                }
+            })
+            
     
             if (user){
+                user.dataValues.qtdProdutos = produtos;
                 let msg = "sucesso";
                 let body = {user: user};
                 return helper.true_status(res, body, msg);

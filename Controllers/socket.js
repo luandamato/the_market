@@ -43,7 +43,11 @@ module.exports= function(socket){
     
         const element = conexoes.find(item => item.id == socket.id)
         var i = conexoes.indexOf(element);
+        console.log(conexoes, element)
 
+        if (!element){
+            return;
+        }
         var data = {};
         data.nome = element.nome;
         data.id = element.id;
