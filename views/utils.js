@@ -33,7 +33,7 @@ function register(){
     var bio = document.getElementById("bio").value;
     var senha = document.getElementById("senha").value;
     var confirmeSenha = document.getElementById("confirmeSenha").value;
-    var cep = document.getElementById("cep").value;
+    var zip = document.getElementById("cep").value;
     var rua = document.getElementById("rua").value;
     var bairro = document.getElementById("bairro").value;
     var numero = document.getElementById("numero").value;
@@ -59,7 +59,7 @@ function register(){
         nascimento,
         bio,
         senha,
-        cep,
+        zip,
         rua,
         bairro,
         numero,
@@ -192,7 +192,7 @@ function callApiGet(url, callback){
             callback(JSON.parse(xhr.response));
         } else {
             //TODO: tratar os possíveis erros
-            alert("ERRO: "+xhr.status);
+            alert("ERRO: "+xhr.status + "\n"+url);
         }
     }
     xhr.send();

@@ -2,6 +2,7 @@ const User = require('../src/models/User');
 const Produto = require('../src/models/Produto');
 const Op = require('sequelize').Op
 const helper = require('../src/helper.js');
+const endController = require('./EnderecoController')
 
 module.exports = {
     async cadastrar(req, res){
@@ -18,11 +19,18 @@ module.exports = {
             const non_required = {
                 foto: req.body.foto,
                 bio: req.body.bio,
-                enderecoId: req.body.enderecoId,
+                rua: req.body.rua,
+                bairro: req.body.bairro,
+                cidade: req.body.cidade,
+                estado: req.body.estado,
+                pais: req.body.pais,
+                numero: req.body.numero,
+                complemento: req.body.complemento,
+                zip: req.body.zip
             };
             let requestdata = await helper.vaildObject(required, non_required, res);
 
-            var { nome, nascimento, cpf, email, telefone, username, senha, foto, bio, enderecoId } = req.body;
+            var { nome, nascimento, cpf, email, telefone, username, senha, foto, bio } = req.body;
             senha = await helper.criptografar(senha);
             const codigo = Math.floor(Math.random() * 10000);
             const email_validado = false;
@@ -48,10 +56,20 @@ module.exports = {
             if (existUsername){
                 return helper.already_exist(res, "O username ou email escolhido ja está cadastrado")
             }
-            const user = await User.create({ nome, nascimento, cpf, email, telefone, username, senha, foto, bio, enderecoId, codigo, email_validado});
-    
+            const user = await User.create({ nome, nascimento, cpf, email, telefone, username, senha, foto, bio, codigo, email_validado});
+            
+            if (!user){
+                let msg = "Erro ao criar usuario";
+                return helper.false_status(res, msg);
+            }
+
+            //criar endereco para usuario
+            var { rua, bairro, cidade, estado, pais, numero, complemento, zip } = req.body;
+            var end = await endController.novoEndereco(rua, bairro, cidade, estado, "br", numero, complemento, zip, user.id);
+            
+
+
             let msg = "sucesso";
-            let body = {user: user};
             return helper.true_status(res, user, msg);
         } catch (error) {
             throw error
@@ -201,6 +219,48 @@ module.exports = {
                     return helper.false_status(res, "O código informado não está correto"); 
                 }
                 
+            }
+            else{
+                return helper.false_status(res, "Usuário não encontrado");
+            }
+        } catch (error) {
+            throw error
+        }
+        
+    },
+    async getUsers(req, res){
+        try{
+            const required = {
+                nome: req.params.nome
+            };
+            const non_required = {};
+            let requestdata = await helper.vaildObject(required, non_required, res);
+
+            var { nome } = req.params;
+            nome = "%"+nome+"%";
+            const user = await User.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            username: {
+                                [Op.like]: nome
+                            }
+                        },
+                        {
+                            nome: {
+                                [Op.like]: nome
+                            }
+                        }
+                    ]
+                }
+            })
+
+            
+    
+            if (user){
+                let msg = "sucesso";
+                let body = {user};
+                return helper.true_status(res, body, msg);
             }
             else{
                 return helper.false_status(res, "Usuário não encontrado");

@@ -3,6 +3,8 @@ var pessoasDigitando = [];
 var ultimoAEnviar = "";
 var base64 = "";
 
+
+
 function getQueryString() {
     var result = {}, queryString = location.search.slice(1),
         re = /([^&=]+)=([^&]*)/g, m;
@@ -16,11 +18,124 @@ function getQueryString() {
 
 //var nome = getQueryString()["username"];
 var nome = localStorage.getItem("username");
+var id = localStorage.getItem("userId");
+var id2 = ""
 //alert("Logado como: "+nome);
 document.getElementById('nome').value = nome;
 
-// var socket = io('http://127.0.0.1:4000/');
-var socket = io('https://the-market-lab.herokuapp.com/');
+getConversas();
+
+var socket = io('http://127.0.0.1:4000/');
+// var socket = io('https://the-market-lab.herokuapp.com/');
+
+//rest
+
+function getConversas(){
+    document.getElementById('inbox_chat').innerHTML = ""
+    callApiGet('/conversas/historico/'+id, function(response){
+        if (response.data.historico){
+            var conversas = response.data.historico;
+            conversas.map((val)=>{
+                var img = 'https://ptetutorials.com/images/user-profile.png';
+                if(val.foto){
+                    img = 'data:image/png;base64,'+val.foto
+                }
+
+                document.getElementById('inbox_chat').innerHTML += ''+
+                    '<div class="chat_list" id="conversa'+ val.id +'" onclick="carregarConversa('+ val.id +')">'+
+                        '<div class="chat_people">'+
+                            '<div class="chat_img"> <img src="'+ img +'" alt="sunil"> </div>'+
+                            '<div class="chat_ib">'+
+                                '<h5>'+ val.nome +' <span class="chat_date">'+ '' +'</span></h5>'+
+                                '<p>'+ val.username +'</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+            })
+        }
+        
+    });
+}
+
+function carregarConversa(user_id2){
+    id2 = user_id2
+    var cardsConversas = document.getElementsByClassName("chat_list")
+    for (var i = 0; i < cardsConversas.length; i++) {
+        cardsConversas[i].classList.remove("active_chat")
+    }
+    document.getElementById('search-bar').value = "";
+    document.getElementById('inputMensagem').style.display = "block";
+
+
+    var divId = "conversa"+id2
+    var element = document.getElementById(divId);
+    element.classList.add("active_chat")
+
+    document.getElementById('msg_history').innerHTML = ""
+    callApiGet('/conversa/'+id+'/'+id2, function(response){
+        getConversas()
+        if (response.data.mensagens){
+            var mensagens = response.data.mensagens;
+            mensagens.map((val)=>{
+                renderMessage(val)
+            })
+        }
+        
+    });
+}
+
+$('.search-bar').on('keyup', function () {
+
+    buscarUser()
+
+});
+
+function buscarUser(){
+    var nome = document.getElementById("search-bar").value;
+    if (!nome){
+        getConversas()
+        return;
+    }
+    callApiGet('/usersByName/'+nome, function(response){
+        if (response.data.user){
+            document.getElementById('inbox_chat').innerHTML = ''
+            var users = response.data.user;
+            users.map((val)=>{
+                var img = 'https://ptetutorials.com/images/user-profile.png';
+                if(val.foto){
+                    img = 'data:image/png;base64,'+val.foto
+                }
+
+                document.getElementById('inbox_chat').innerHTML += ''+
+                    '<div class="chat_list" id="conversa'+ val.id +'" onclick="carregarConversa('+ val.id +')">'+
+                        '<div class="chat_people">'+
+                            '<div class="chat_img"> <img src="'+ img +'" alt="sunil"> </div>'+
+                            '<div class="chat_ib">'+
+                                '<h5>'+ val.nome +' <span class="chat_date">'+ '' +'</span></h5>'+
+                                '<p>'+ val.username +'</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+            })
+        }
+        
+    });
+}
+
+function callApiGet(url, callback){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            callback(JSON.parse(xhr.response));
+        } else {
+            //TODO: tratar os possíveis erros
+            alert("ERRO: "+xhr.status + "\n"+url);
+        }
+    }
+    xhr.send();
+}
+// socket
 
 function scroll(limit){
     const out = document.getElementById("msg_history")
@@ -34,51 +149,54 @@ function scroll(limit){
 }
 
 function renderMessage(message) {
-    var scrollLimit = 200
-    if (message.id == socket.id){
-        if (message.msg){
+    var scrollLimit = 300
+    var date = new Date(message.updatedAt)
+    var horario = ''+date.getHours()+':'+date.getMinutes() +'    |    '+ date.getDate()+'/'+ date.getMonth()+''
+    if (message.user_id == id){
+        if (message.mensagem){
             $('.msg_history').append('<div class="outgoing_msg">'+
                                         '<div class="sent_msg">'+
-                                            '<p>Test which is a new approach to have all solutions</p>'+
-                                            '<span class="time_date"> 11:01 AM    |    June 9</span> </div>'+
+                                            '<p>'+ message.mensagem +'</p>'+
+                                            '<span class="time_date"> '+ horario +'</span> </div>'+
                                         '</div>')
         }
         else{
-            scrollLimit = 500
+            var imagem = blobToBase64(message.imagem)
+            scrollLimit = 800
             $('.msg_history').append('<div class="outgoing_msg">'+
             '<div class="sent_msg">'+
-                '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">'+
-                '<span class="time_date"> 11:01 AM    |    June 9</span> </div>'+
+                '<img src="data:image/png;base64,'+message.imagem+'" alt="sunil">'+
+                '<span class="time_date"> '+ horario +'</span> </div>'+
             '</div>')
         }
     }
     else{
         var foto = '<div class="incoming_msg">'
-        if (ultimoAEnviar != message.nome){
-            foto += '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-        }
-        if (message.msg){
+        // if (ultimoAEnviar != message.nome){
+        //     foto += '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+        // }
+        if (message.mensagem){
             $('.msg_history').append(foto+
             '<div class="received_msg">'+
                 '<div class="received_withd_msg">'+
-                '<p>Test which is a new approach to have all solutions</p>'+
-                '<span class="time_date"> 11:01 AM    |    June 9</span></div>'+
+                '<p>'+ message.mensagem +'</p>'+
+                '<span class="time_date"> '+ horario +'</span> </div>'+
             '</div>'+
             '</div>')
         }
         else{
-            scrollLimit = 500
+            var imagem = blobToBase64(message.imagem)
+            scrollLimit = 800
             $('.msg_history').append(foto+
                 '<div class="received_msg">'+
                     '<div class="received_withd_msg">'+
-                    '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">'+
-                    '<span class="time_date"> 11:01 AM    |    June 9</span></div>'+
+                    '<img src="data:image/png;base64,'+message.imagem+'" alt="sunil">'+
+                    '<span class="time_date"> '+ horario +'</span> </div>'+
                 '</div>'+
                 '</div>')
         }
         $('.msg_history').append('<br>')
     }
-    console.log(message)
     ultimoAEnviar = message.nome;
     scroll(scrollLimit)
     
@@ -165,10 +283,11 @@ socket.on('parouDigitar', function(message){
 
 
 socket.on('connect', function(message){
-    var id = socket.id;
+    var socketId = socket.id;
     var object = {
             nome, 
             id,
+            socketId
         };
         socket.emit('conectar', object);
 })
@@ -186,7 +305,6 @@ $('#chat').submit(function(event) {
     event.preventDefault();
 
     var msg = $('input[name=message').val();
-    var id = socket.id;
 
     if (nome.length){
         if (msg.length){
@@ -194,6 +312,7 @@ $('#chat').submit(function(event) {
                 nome, 
                 msg,
                 id,
+                user2: id2,
             };
         }
         else if (base64.length){
@@ -202,11 +321,11 @@ $('#chat').submit(function(event) {
                 nome, 
                 img,
                 id,
+                user2: id2,
             };
             toggle(false);
         }
         base64 = ""
-        renderMessage(object);
         
         socket.emit('enviarMensagem', object);
     }
@@ -261,6 +380,15 @@ function stringToBase64(file){
     }
 }
 
+function blobToBase64(blob){
+
+    return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+}
+
 function dragOverHandler(ev) {
     toggle(true)
     // Impedir o comportamento padrão (impedir que o arquivo seja aberto)
@@ -286,7 +414,7 @@ function dropHandler(ev) {
         for (var i = 0; i < ev.dataTransfer.files.length; i++) {
             stringToBase64(ev.dataTransfer.files[i])
             isTyping(true)
-            console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+            //console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
         }
     }
 }

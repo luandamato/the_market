@@ -12,7 +12,7 @@ class User extends Model{
             senha: DataTypes.STRING,
             foto: DataTypes.STRING,
             bio: DataTypes.STRING,
-            enderecoId: DataTypes.INTEGER,
+            socket_id: DataTypes.STRING,
             codigo: DataTypes.STRING,
             email_validado: DataTypes.STRING
 
@@ -23,6 +23,8 @@ class User extends Model{
 
     static associate(models){
         this.hasMany(models.Produto, { foreignKey:"anunciante_id", as: "produtos"})
+        this.hasMany(models.Mensagem, { foreignKey:"user_id", as: "mensagens"})
+        this.hasMany(models.Endereco, { foreignKey:"user_id", as: "enderecos"})
     }
 }
 
