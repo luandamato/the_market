@@ -39,14 +39,16 @@ module.exports = {
                 where: {
                     [Op.or]: [
                         {
-                            username: {
-                                [Op.eq]: username
-                            }
+                            [Op.or]: [
+                                { username: { [Op.eq]: username}},
+                                {email: {[Op.eq]: username}}
+                            ]
                         },
                         {
-                            email: {
-                                [Op.eq]: email
-                            }
+                            [Op.or]: [
+                                { username: { [Op.eq]: email}},
+                                {email: {[Op.eq]: email}}
+                            ]
                         }
                     ]
                 }
@@ -76,6 +78,74 @@ module.exports = {
         }
         
     },
+
+    async update(req, res){
+        try{
+            const required = {
+                nome: req.body.nome,
+                nascimento: req.body.nascimento,
+                cpf: req.body.cpf,
+                email: req.body.email,
+                telefone: req.body.telefone,
+                username: req.body.username
+            };
+            const non_required = {
+            };
+            let requestdata = await helper.vaildObject(required, non_required, res);
+
+            var { nome, nascimento, cpf, email, telefone, username, bio, id } = req.body;
+
+            const existUsername = await User.findOne(
+            {
+                where: {
+                    [Op.and]: [
+                        { 
+                            [Op.or]: [
+                                {
+                                    [Op.or]: [
+                                        { username: { [Op.eq]: username}},
+                                        {email: {[Op.eq]: username}}
+                                    ]
+                                },
+                                {
+                                    [Op.or]: [
+                                        { username: { [Op.eq]: email}},
+                                        {email: {[Op.eq]: email}}
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: {[Op.not]: id}
+                        }
+                    ]
+                    
+                }
+            })
+    
+            if (existUsername){
+                return helper.already_exist(res, "O username ou email escolhido ja está cadastrado")
+            }
+    
+            
+            const user = await User.update({ 
+                nome, nascimento, cpf, email, telefone, username, bio
+            },
+            {
+                where: {
+                    id: id
+                }
+            });
+            
+
+            let msg = "sucesso";
+            return helper.true_status(res, user, msg);
+        } catch (error) {
+            throw error
+        }
+        
+    },
+
     async getUser(req, res){
         try{
             const required = {
@@ -88,7 +158,8 @@ module.exports = {
             const user = await User.findOne({
                 where:{
                     id,
-                }
+                }, 
+                include: {association: "enderecos"}
             })
 
             const produtos = await Produto.count({ 

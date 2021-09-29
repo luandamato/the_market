@@ -1,3 +1,4 @@
+
 function getUser(){
     var userId = getQueryString()["userId"];
     if (!userId){
@@ -114,8 +115,48 @@ function getData(key){
     return item;
 }
 
+function goProfile(id){
+    window.location.href = "Perfil.html?userId="+id;
+}
+
+//----------------------Editar Pefil--------------------------------
+function editarInfos(){
+    var user = getUserLogado();
+    if (!user){
+        return;
+    }
+
+    var id = user.id;
+    var username = document.getElementById("username").value;
+    var nome = document.getElementById("nome").value;
+    var sobrenome = document.getElementById("sobrenome").value;
+    var email = document.getElementById("email").value;
+    var telefone = document.getElementById("telefone").value;
+    var cpf = document.getElementById("cpf").value;
+    var nascimento = document.getElementById("nasimento").value;
+    var bio = document.getElementById("bio").value;
+
+    var nomeCompleto = nome + " " + sobrenome;
+
+    var body = {
+        username,
+        nome: nomeCompleto,
+        email,
+        telefone,
+        cpf,
+        nascimento,
+        bio,
+        id
+    }
+    callApiPost('/atualizarUser/', body, function(response){
+        goProfile(id);
+    });
+}
+
+
+
+
 function callApiPost(url, body, callback){
-    console.log(JSON.stringify(body))
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.responseType = 'json';
@@ -142,7 +183,7 @@ function callApiGet(url, callback){
             callback(JSON.parse(xhr.response));
         } else {
             //TODO: tratar os possíveis erros
-            alert("ERRO: "+xhr.status);
+            alert("ERRO: "+xhr.status + "\n"+url);
         }
     }
     xhr.send();

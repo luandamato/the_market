@@ -243,6 +243,7 @@ function atualizarPessoasOnline(){
 
 
 socket.on('mensagemRecebida', function(message){
+    if ((message.user_id == id && message.user2_id == id2) || (message.user_id == id2 && message.user2_id == id))
     renderMessage(message)
 })
 
