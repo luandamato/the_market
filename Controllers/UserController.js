@@ -82,7 +82,7 @@ module.exports = {
     async update(req, res){
         try{
             const required = {
-                nome: req.body.nome,
+                nome: req.body.nome.trim(),
                 nascimento: req.body.nascimento,
                 cpf: req.body.cpf,
                 email: req.body.email,
@@ -94,6 +94,8 @@ module.exports = {
             let requestdata = await helper.vaildObject(required, non_required, res);
 
             var { nome, nascimento, cpf, email, telefone, username, bio, id } = req.body;
+
+            console.log("Nome:"+ nome + ".")
 
             const existUsername = await User.findOne(
             {

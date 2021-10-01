@@ -11,6 +11,7 @@ class Endereco extends Model{
             numero: DataTypes.STRING,
             complemento: DataTypes.STRING,
             zip: DataTypes.STRING,
+            nome: DataTypes.STRING,
         }, {
             sequelize,
             tableName: 'enderecos'

@@ -28,7 +28,7 @@ routes.get("/conversa/:id/:id2", mensagestController.getConversa)
 
 routes.get('/enderecos/:user_id', enderecoController.getEnderecos)
 routes.post('/novoEndereco', enderecoController.cadastrar)
-routes.post('/atualizar', enderecoController.update)
+routes.post('/atualizarEndereco', enderecoController.update)
 
 
 module.exports = routes;

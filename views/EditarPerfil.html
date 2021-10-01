@@ -36,7 +36,7 @@
 		   <input type="search" class="search-data" placeholder="Search" id="search" name="search" required>
 		   <button type="submit" class="fas fa-search"></button>
 		</form>
-		]<div class="" onclick="logout()">
+		<div class="" onclick="logout()">
 			<li><a href="Login.html" id="entrarSair"></a></li>
 		 </div>
 	 </nav>
@@ -168,17 +168,26 @@
 							<button class="btn btn-light">Cancelar</button>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+					<!-- <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
 						<h3 class="mb-4">Endereços</h3>
 						<button type="button" class="collapsible">Endereço 1</button>
 						<div class="contentEndereco">
-							<form>
+							<form onsubmit="return editarEnd(id, nome, cep, rua, bairro, numero, complemento, cidade, estado)">
+								<input type="hidden" name="id" value="1">
 								<div class="form-container">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
+												<label>Nome endereco</label>
+												<input type="text" class="form-control" value="" id="nomeEndereco" name="nome">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
 												<label>CEP</label>
-												<input type="text" class="form-control" value="" name="first-name">
+												<input type="text" class="form-control cep" value="" name="first-name">
 											</div>
 										</div>
 									</div>
@@ -232,7 +241,7 @@
 						<button type="button" class="collapsible">Endereço 2</button>
 						<div class="contentEndereco">
 							<form>
-								<div class="form-container">
+								<div class="form-container" onsubmit="atualizarEnd()">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -282,12 +291,79 @@
 									</div>
 								</div>
 								<div>
+									<button class="btn btn-primary" type="submit">Atualizar</button>
+									<button class="btn btn-light">Cancelar</button>
+								</div>
+							</form>
+						</div>
+						<hr>
+						<button class="collapsible btn btn-primary " style="float: right">Novo Endereco</button>
+						<div class="contentEndereco">
+							<form>
+								<div class="form-container">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Nome do endereço</label>
+												<input type="text" class="form-control" value="" name="nome" id="nomeEndereco">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>CEP</label>
+												<input type="text" class="form-control" value="" name="cep" id="cep">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Logradouro</label>
+												<input type="text" class="form-control" value="" name="rua" id="rua">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Bairro</label>
+												<input type="text" class="form-control" value="" name="bairro" id="bairro">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>N°</label>
+												<input type="text" class="form-control" value="" name="numero" id="numero">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Complemento</label>
+												<input type="text" class="form-control" value="" name="complemento" id="complemento">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Cidade</label>
+												<input type="text" class="form-control" value="" name="cidade" id="cidade">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Estado</label>
+												<input type="text" class="form-control" value="" name="estado" id="estado">
+											</div>
+										</div>
+										<div class="card-wrapper"></div>
+									</div>
+								</div>
+								<div>
 									<button class="btn btn-primary">Atualizar</button>
 									<button class="btn btn-light">Cancelar</button>
 								</div>
 							</form>
 						</div>
-					</div>
+					</div> -->
 					<div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="application-tab">
 						<h3 class="mb-4">Formas de pagamento</h3>
 						<button type="button" class="collapsible">Pagamento 1</button>

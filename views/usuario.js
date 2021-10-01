@@ -138,6 +138,12 @@ function editarInfos(){
 
     var nomeCompleto = nome + " " + sobrenome;
 
+    if (nomeCompleto.split(" ").length < 2 || !nome || !sobrenome){
+        alert("preencha nome e sobrenome")
+        return;
+    }
+
+
     var body = {
         username,
         nome: nomeCompleto,
@@ -148,9 +154,85 @@ function editarInfos(){
         bio,
         id
     }
+    console.log(body);
     callApiPost('/atualizarUser/', body, function(response){
         goProfile(id);
     });
+}
+
+function editarEnd(pId, pNome, pCep, pRua, pBairro, pNumero, pComplemento, pCidade, pEstado){
+    var user = getUserLogado();
+    if (!user){
+        return;
+    }
+    var userId = user.id;
+    
+    const id = pId.value
+    const nome = pNome.value
+    const zip = pCep.value
+    const rua = pRua.value
+    const bairro = pBairro.value
+    const numero = pNumero.value
+    const complemento = pComplemento.value
+    const cidade = pCidade.value
+    const estado = pEstado.value
+    const pais = "br"
+    
+    var body = {
+        id,
+        zip,
+        nome,
+        rua,
+        bairro,
+        numero,
+        complemento,
+        cidade,
+        estado,
+        pais
+    }
+    console.log(body);
+    callApiPost('/atualizarEndereco', body, function(response){
+        goProfile(userId);
+    });
+    return false;
+}
+
+function novoEndereco(pId, pNome, pCep, pRua, pBairro, pNumero, pComplemento, pCidade, pEstado){
+    var user = getUserLogado();
+    if (!user){
+        return;
+    }
+    var user_id = user.id;
+    
+    const id = pId.value
+    const nome = pNome.value
+    const zip = pCep.value
+    const rua = pRua.value
+    const bairro = pBairro.value
+    const numero = pNumero.value
+    const complemento = pComplemento.value
+    const cidade = pCidade.value
+    const estado = pEstado.value
+    const pais = "br"
+    
+    var body = {
+        id,
+        zip,
+        nome,
+        rua,
+        bairro,
+        numero,
+        complemento,
+        cidade,
+        estado,
+        user_id,
+        pais
+    }
+    console.log(body);
+    callApiPost('/novoEndereco', body, function(response){
+        goProfile(user_id);
+    });
+    return false;
 }
 
 

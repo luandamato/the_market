@@ -20,7 +20,7 @@ module.exports = {
             const non_required = {};
             let requestdata = await helper.vaildObject(required, non_required, res);
 
-            var { rua, bairro, cidade, estado, pais, numero, complemento, zip, user_id } = req.body;
+            var { rua, bairro, cidade, estado, pais, numero, complemento, zip, user_id, nome } = req.body;
 
             const user = await User.findByPk(user_id);
 
@@ -28,7 +28,7 @@ module.exports = {
                 return helper.false_status(res, "Usuário não encontrado");
             }
             
-            const end = await Endereco.create({ rua, bairro, cidade, estado, pais, numero, complemento, zip, user_id });
+            const end = await Endereco.create({ rua, bairro, cidade, estado, pais, numero, complemento, zip, user_id, nome });
     
             let msg = "sucesso";
             let body = {end};
@@ -85,7 +85,6 @@ module.exports = {
                 bairro: req.body.bairro,
                 cidade: req.body.cidade,
                 estado: req.body.estado,
-                pais: req.body.pais,
                 numero: req.body.numero,
                 zip: req.body.zip,
                 id: req.body.id
@@ -94,10 +93,10 @@ module.exports = {
             const non_required = {};
             let requestdata = await helper.vaildObject(required, non_required, res);
 
-            var { rua, bairro, cidade, estado, pais, numero, complemento, zip, id } = req.body;
+            var { rua, bairro, cidade, estado, pais, numero, complemento, zip, id, nome } = req.body;
 
             const update = Endereco.update({
-                rua, bairro, cidade, estado, pais, numero, complemento, zip
+                rua, bairro, cidade, estado, pais, numero, complemento, zip, nome
             },
             {
                 where:{

@@ -25,7 +25,11 @@ function addUser(user){
     const container = document.getElementById("v-pills-tabContent");
 
     const infos = getInfos(user)
+    const end = getEnd(user.enderecos)
+
+
     container.innerHTML += infos
+    container.innerHTML += end
 }
 
 function getInfos(user){ 
@@ -38,7 +42,6 @@ function getInfos(user){
         useGrouping: false
       })
     const nascimento = ''+date.getFullYear()+'-'+ mesFormatado +'-'+ date.getDate()+'';
-    console.log(nascimento)
     var nome = user.nome
     var sobrenome = ""
     if (user.nome.split(" ").length >= 2){
@@ -114,6 +117,176 @@ function getInfos(user){
 
        return infos;
 }
+
+function getEnd(enderecos){
+    console.log(enderecos);
+    var i = 1;
+    var retorno = '<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">'+
+    '    <h3 class="mb-4">Endereços</h3>';
+    console.log(retorno);
+    enderecos.map((val)=>{
+        var nome = "Endereco" + i 
+        var complemento = "" 
+        if (val.nome){
+            nome = val.nome;
+        }
+        if (val.complemento){
+            complemento = val.complemento;
+        }
+
+        var end = ''+
+        '    <button class="collapsible btn btn-primary " style="float: right">'+ nome +'</button>'+
+        '    <div class="contentEndereco">'+
+        '        <form onsubmit="return editarEnd(id, nome, cep, rua, bairro, numero, complemento, cidade, estado)">'+
+        '            <input type="hidden" name="id" value="'+ val.id +'">'+
+        '            <div class="form-container">'+
+        '                <div class="row">'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Nome do endereço</label>'+
+        '                            <input type="text" class="form-control" value="'+ nome +'" name="nome" >'+
+        '                        </div>'+
+        '                    </div>'+
+        '                </div>'+
+        '                <div class="row">'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>CEP</label>'+
+        '                            <input type="text" class="form-control" value="'+ val.zip +'" name="cep">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                </div>'+
+        '                <div class="row">'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Logradouro</label>'+
+        '                            <input type="text" class="form-control" value="'+ val.rua +'" name="rua" >'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Bairro</label>'+
+        '                            <input type="text" class="form-control" value="'+ val.bairro +'" name="bairro">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>N°</label>'+
+        '                            <input type="text" class="form-control" value="'+ val.numero +'" name="numero">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Complemento</label>'+
+        '                            <input type="text" class="form-control" value="'+ complemento +'" name="complemento">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Cidade</label>'+
+        '                            <input type="text" class="form-control" value="'+ val.cidade +'" name="cidade">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Estado</label>'+
+        '                            <input type="text" class="form-control" value="'+ val.estado +'" name="estado">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="card-wrapper"></div>'+
+        '                </div>'+
+        '            </div>'+
+        '            <div>'+
+        '                <button class="btn btn-primary" type="submit">Atualizar</button>'+
+        '                <button class="btn btn-light">Cancelar</button>'+
+        '            </div>'+
+        '        </form>'+
+        '    </div> .';
+
+        retorno += end;
+        retorno += '<hr>'
+
+        i += 1;
+    })
+
+    var novo = ''+
+        '    <button class="collapsible btn btn-primary " style="float: right">Novo Endereco</button>'+
+        '    <div class="contentEndereco">'+
+        '        <form onsubmit="return novoEndereco(id, nome, cep, rua, bairro, numero, complemento, cidade, estado)">'+
+        '            <div class="form-container">'+
+        '                <div class="row">'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Nome do endereço</label>'+
+        '                            <input type="text" class="form-control" value="" name="nome" id="nomeEndereco">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                </div>'+
+        '                <div class="row">'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>CEP</label>'+
+        '                            <input type="text" class="form-control" value="" name="cep" id="cep">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                </div>'+
+        '                <div class="row">'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Logradouro</label>'+
+        '                            <input type="text" class="form-control" value="" name="rua" id="rua">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Bairro</label>'+
+        '                            <input type="text" class="form-control" value="" name="bairro" id="bairro">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>N°</label>'+
+        '                            <input type="text" class="form-control" value="" name="numero" id="numero">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Complemento</label>'+
+        '                            <input type="text" class="form-control" value="" name="complemento" id="complemento">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Cidade</label>'+
+        '                            <input type="text" class="form-control" value="" name="cidade" id="cidade">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="col-md-6">'+
+        '                        <div class="form-group">'+
+        '                            <label>Estado</label>'+
+        '                            <input type="text" class="form-control" value="" name="estado" id="estado">'+
+        '                        </div>'+
+        '                    </div>'+
+        '                    <div class="card-wrapper"></div>'+
+        '                </div>'+
+        '            </div>'+
+        '            <div>'+
+        '                <button class="btn btn-primary">Atualizar</button>'+
+        '                <button class="btn btn-light">Cancelar</button>'+
+        '            </div>'+
+        '        </form>'+
+        '    </div>'+
+        '</div>';
+
+    retorno += novo;
+
+    console.log(retorno);
+
+    return retorno;
+    
+}
+
+
 
 
 
