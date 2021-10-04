@@ -7,7 +7,7 @@ describe('testes usuario', ()=>{
     it('Login', async()=>{
         const response = await request(app)
             .post('/login')
-            .send({ username: "luan", senha: "1234"});
+            .send({ username: "luan", senha: "123"});
         
             expect(response.body.code).toBe(200)
 
@@ -25,7 +25,7 @@ describe('testes usuario', ()=>{
             senha: "123",
             bio: "bio de testes"});
         
-        expect(response.status).toBe(200)
+        expect(response.body.status).toBe(200)
 
     })
 
@@ -34,7 +34,7 @@ describe('testes usuario', ()=>{
             .get('/user/1')
             .send();
         
-        expect(response.status).toBe(200)
+        expect(response.body.status).toBe(200)
 
 
         

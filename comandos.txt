@@ -1,11 +1,14 @@
 npm install express sequelize mysql2 request
 npm install sequelize-cli -D
 npm install nodemon -D
+npm install jest
+npm install supertest -D
 npm install ejs socket.io
 npm install nodemailer
 npx sequelize db:create
 npx sequelize db:migrate
 
+npm test
 npm start
 
 
