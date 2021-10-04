@@ -25,8 +25,8 @@ document.getElementById('nome').value = nome;
 
 getConversas();
 
-// var socket = io('http://127.0.0.1:4000/');
-var socket = io('https://the-market-lab.herokuapp.com/');
+var socket = io('http://127.0.0.1:4000/');
+// var socket = io('https://the-market-lab.herokuapp.com/');
 
 //rest
 

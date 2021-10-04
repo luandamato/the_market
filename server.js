@@ -1,24 +1,8 @@
-const express = require('express');
-const path = require('path');
-const rotas = require('./src/routes')
-var bodyParser = require('body-parser');
+const app = require("./app");
 
-require('./src/database');
-
-const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-app.use(express.static(path.join(__dirname, 'views')));
-app.set('views', path.join(__dirname, 'views'))
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'hmtl')
-app.use(express.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-  }));
-app.use(bodyParser.json());
 
-app.use(rotas);
 io.on('connection', socket =>{
     require('./Controllers/socket')(socket);
 })

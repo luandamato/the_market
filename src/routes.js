@@ -32,5 +32,9 @@ routes.post('/novoEndereco', enderecoController.cadastrar)
 routes.post('/atualizarEndereco', enderecoController.update)
 routes.post('/excluirEndereco', enderecoController.excluir)
 
+routes.get('/testes', (req, res) => {
+    return res.status(200).send()
+})
+
 
 module.exports = routes;
