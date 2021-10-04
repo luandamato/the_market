@@ -79,6 +79,47 @@ module.exports = {
         
     },
 
+    async trocarSenha(req, res){
+        try{
+            const required = {
+                senha: req.body.senha,
+                novaSenha: req.body.novaSenha,
+                id: req.body.id,
+            };
+            const non_required = {
+            };
+            let requestdata = await helper.vaildObject(required, non_required, res);
+
+            var { senha, novaSenha, id } = req.body;
+
+            senha = await helper.criptografar(senha);
+            novaSenha = await helper.criptografar(novaSenha);
+
+            const user = await User.findByPk(id);
+
+            if (user.senha != senha){
+                return helper.false_status(res, "a senha informada está incorreta")
+            }
+
+            
+            const update = await User.update({ 
+                senha: novaSenha,
+            },
+            {
+                where: {
+                    id: id
+                }
+            });
+            
+
+            let msg = "sucesso";
+            return helper.true_status(res, user, msg);
+        } catch (error) {
+            throw error
+        }
+        
+    },
+
     async update(req, res){
         try{
             const required = {

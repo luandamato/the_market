@@ -235,6 +235,17 @@ function novoEndereco(pId, pNome, pCep, pRua, pBairro, pNumero, pComplemento, pC
     return false;
 }
 
+function excluirEndereco(id){
+    var user = getUserLogado();
+    if (!user){
+        return;
+    }
+
+    callApiPost('/excluirEndereco', {id}, function(response){
+        window.location.reload(false);
+    });
+}
+
 
 
 

@@ -21,6 +21,7 @@
     "socket.io": "^4.2.0"
   },
   "devDependencies": {
+    "jest": "^27.2.4",
     "sequelize-cli": "^6.2.0"
   }
 }

@@ -81,7 +81,7 @@ function getInfos(user){
        '        <div class="col-md-6">'+
        '            <div class="form-group">'+
        '                <label>Email</label>'+
-       '                <input type="text" class="form-control" id="email" value="'+ email +'">'+
+       '                <input type="email" class="form-control" id="email" value="'+ email +'">'+
        '            </div>'+
        '        </div>'+
        '        <div class="col-md-6">'+
@@ -197,8 +197,9 @@ function getEnd(enderecos){
         '                </div>'+
         '            </div>'+
         '            <div>'+
-        '                <button class="btn btn-primary" type="submit">Atualizar</button>'+
-        '                <button class="btn btn-light">Cancelar</button>'+
+        '                <button type="submit" class="btn btn-primary">Atualizar</button>'+
+        '                <button type="cancel" class="btn btn-light">Cancelar</button>'+
+        '                <button class="btn btn-light" style="float: right" onclick="excluir('+ val.id +')">excluir</button>'+
         '            </div>'+
         '        </form>'+
         '    </div> .';
@@ -271,8 +272,8 @@ function getEnd(enderecos){
         '                </div>'+
         '            </div>'+
         '            <div>'+
-        '                <button class="btn btn-primary">Atualizar</button>'+
-        '                <button class="btn btn-light">Cancelar</button>'+
+        '                <button type="submit" class="btn btn-primary">Atualizar</button>'+
+        '                <button type="cancel" onclick="alert('+ i +')" class="btn btn-light">Cancelar</button>'+
         '            </div>'+
         '        </form>'+
         '    </div>'+

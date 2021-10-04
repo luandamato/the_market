@@ -17,6 +17,7 @@ routes.post('/login', userController.login)
 routes.post('/enviarEmailValidacao', userController.enviarEmailValidacao)
 routes.post('/validarEmail', userController.validarEmail)
 routes.post('/atualizarUser', userController.update)
+routes.post('/trocarSenha', userController.trocarSenha)
 
 routes.post("/produto", produtoController.cadastrar)
 routes.get("/produtos", produtoController.produtos)
@@ -29,6 +30,7 @@ routes.get("/conversa/:id/:id2", mensagestController.getConversa)
 routes.get('/enderecos/:user_id', enderecoController.getEnderecos)
 routes.post('/novoEndereco', enderecoController.cadastrar)
 routes.post('/atualizarEndereco', enderecoController.update)
+routes.post('/excluirEndereco', enderecoController.excluir)
 
 
 module.exports = routes;

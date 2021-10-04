@@ -114,4 +114,33 @@ module.exports = {
         
     },
 
+
+    async excluir(req, res){
+        try{
+            const required = {
+                id: req.body.id,
+            };
+
+            const non_required = {};
+            let requestdata = await helper.vaildObject(required, non_required, res);
+
+            var { id } = req.body;
+
+            const update = Endereco.destroy(
+            {
+                where:{
+                    id: id
+                }
+            })
+
+
+            let msg = "sucesso";
+            let body = {update};
+            return helper.true_status(res, body, msg);
+        } catch (error) {
+            throw error
+        }
+        
+    },
+
 };
