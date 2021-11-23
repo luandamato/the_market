@@ -3,9 +3,12 @@ const path = require('path');
 const rotas = require('./src/routes')
 var bodyParser = require('body-parser');
 
+const passport = require('passport')
+const session = require('express-session')
+require("./auth")(passport)
+
+
 require('./src/database');
-
-
 
 
 class AppController {
@@ -13,6 +16,7 @@ class AppController {
       this.express = express();
   
       this.middlewares();
+      this.session();
       this.routes();
     }
   
@@ -27,10 +31,24 @@ class AppController {
           }));
           this.express.use(bodyParser.json());
     }
+
+    
+    session(){
+      this.express.use(session({
+        secret: "12345",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {maxAge: 2 * 60 * 1000}
+      }))
+
+      this.express.use(passport.initialize());
+      this.express.use(passport.session());
+    }
   
     routes() {
         this.express.use(rotas);
     }
+
   }
   
   module.exports = new AppController().express;

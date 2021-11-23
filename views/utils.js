@@ -3,6 +3,10 @@ function goHome() {
     window.location.href = "Home.html";
 }
 
+function goLogin() {
+    window.location.href = "Login.html";
+}
+
 function goDetail(id){
     window.location.href = "ProdutoDetalhe.html?produtoId="+id;
 }
@@ -83,6 +87,7 @@ function login(){
     var senha = document.getElementById("senha").value;
     var body = {username, senha}
     callApiPost('/login', body, function(response){
+        console.log(JSON.stringify(response));
         if (response.data.user.id){
             setUser(response.data.user);
             saveData("username", response.data.user.nome);
@@ -176,6 +181,8 @@ function callApiPost(url, body, callback){
                 alert(xhr.response.msg);
             }
             callback(xhr.response);
+        } else if(xhr.status == 405) {
+            logout()
         } else {
             //TODO: tratar os possíveis erros
             alert(xhr.response.msg);
@@ -190,7 +197,9 @@ function callApiGet(url, callback){
     xhr.onload = function(){
         if(xhr.status == 200){
             callback(JSON.parse(xhr.response));
-        } else {
+        } else if(xhr.status == 405) {
+            saveData("username", "");
+        } else{
             //TODO: tratar os possíveis erros
             alert("ERRO: "+xhr.status + "\n"+url);
         }

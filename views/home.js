@@ -55,6 +55,8 @@ function callApiGet(url, callback){
     xhr.onload = function(){
         if(xhr.status == 200){
             callback(JSON.parse(xhr.response));
+        } else if(xhr.status == 405) {
+            saveData("username", "");
         } else {
             //TODO: tratar os possíveis erros
             alert("ERRO: "+xhr.status);

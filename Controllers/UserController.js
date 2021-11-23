@@ -384,4 +384,39 @@ module.exports = {
         }
         
     },
+    async getAllUser(req, res){
+        try{
+            const required = {
+            };
+            const non_required = {};
+            let requestdata = await helper.vaildObject(required, non_required, res);
+
+            const { id } = req.params;
+            const users = await User.findAll({
+                include: [{association: "enderecos"},
+                {association: "produtos"}],
+                order: [ ["id", "DESC"]],
+            })
+
+            // const produtos = await Produto.count({ 
+            //     where: {
+            //         anunciante_id: id
+            //     }
+            // })
+            
+    
+            if (users){
+                // user.dataValues.qtdProdutos = produtos;
+                let msg = "sucesso";
+                let body = {users};
+                return helper.true_status(res, body, msg);
+            }
+            else{
+                return helper.false_status(res, "Usuário não encontrado");
+            }
+        } catch (error) {
+            throw error
+        }
+        
+    },
 };

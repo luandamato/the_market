@@ -41,14 +41,18 @@
 	 </nav>
 
 
-	 <h1>AINDA NAO IMPLEMENTADO</h1>
+	 <section style="margin: 50px;">
+		<h1>SOMENTE ADMINs VEEM ESSA PÁGINA</h1>
+		<div class="users" id="users"></div>
+	 </section>
+		
      
 
 	 <script>
 		var nav = document.getElementById("nav-items");
 		var btn = document.getElementById("entrarSair");
 		if (localStorage.getItem("username")){
-			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="Chat.html">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="AnunciarProduto.html">Anunciar item </a></li><li><a href="#">Meu carrinho </a></li>'
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="Chat.html">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="AnunciarProduto.html">Anunciar item </a></li><li><a href="#">Painel </a></li>'
 			btn.innerHTML = 'Sair'
 		}
 		else{
@@ -83,5 +87,24 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	
+	<script src="Carrinho.js"></script>
+	<script>
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+
+		for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+			content.style.display = "none";
+			} else {
+			content.style.display = "block";
+			}
+		});
+		}
+	</script>
+
 </body>
 </html>

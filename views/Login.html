@@ -12,7 +12,6 @@
 	<link rel="stylesheet" type="text/css" href="css/nav.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 	<script src="utils.js"></script>
-    <script src="home.js"></script>
 </head>
 <body>
 
@@ -55,7 +54,7 @@
 		var nav = document.getElementById("nav-items");
 		var btn = document.getElementById("entrarSair");
 		if (localStorage.getItem("username")){
-			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="Chat.html">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="AnunciarProduto.html">Anunciar item </a></li><li><a href="Carrinho.html">Meu carrinho </a></li>'
+			nav.innerHTML = '<li><a href="Home.html">Home</a></li><li><a href="Chat.html">Chat</a></li><li><a href="SobreNos.html">Sobre Nós</a></li><li><a href="Perfil.html">Perfil</a></li><li><a href="AnunciarProduto.html">Anunciar item </a></li><li><a href="Carrinho.html">Painel </a></li>'
 			btn.innerHTML = 'Sair'
 		}
 		else{

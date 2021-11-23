@@ -4,6 +4,7 @@ npm install nodemon -D
 npm install jest
 npm install supertest -D
 npm install ejs socket.io
+npm i passport passport-local express-session
 npm install nodemailer
 npx sequelize db:create
 npx sequelize db:migrate

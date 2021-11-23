@@ -7,9 +7,9 @@ describe('TESTES PRODUTOS', ()=>{
         var nome = "produto teste"
         var descricao = "descricao produto teste"
         var preco = "34,60"
-        var usado = false
-        var desativar_ao_vender = true
-        var anunciante_id = 1
+        var usado = "false"
+        var desativar_ao_vender = "true"
+        var anunciante_id = 8
 
         const response = await request(app)
             .post('/produto')
@@ -18,7 +18,7 @@ describe('TESTES PRODUTOS', ()=>{
         expect(response.body.code).toBe(200)
     });
 
-    it('get produtos', async()=>{
+    it('obter todos os produtos (home)', async()=>{
         const response = await request(app)
             .get('/produtos')
             .send();
@@ -27,7 +27,7 @@ describe('TESTES PRODUTOS', ()=>{
 
     });
 
-    it('get produto', async()=>{
+    it('obter produto (detalhes do produto)', async()=>{
         const response = await request(app)
             .get('/produto/1')
             .send();
@@ -36,9 +36,9 @@ describe('TESTES PRODUTOS', ()=>{
 
     });
 
-    it('get produto do usuario', async()=>{
+    it('obter todos produto cadastrados por um usuario especifico', async()=>{
         const response = await request(app)
-            .get('/user/produtos/1')
+            .get('/user/produtos/18')
             .send();
         
         expect(response.body.code).toBe(200)

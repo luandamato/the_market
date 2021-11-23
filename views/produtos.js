@@ -127,6 +127,8 @@ function callApiPost(url, body, callback){
                 alert(xhr.response.msg);
             }
             callback(xhr.response);
+        } else if(xhr.status == 405) {
+            logout()
         } else {
             //TODO: tratar os possíveis erros
             alert(xhr.response.msg);
@@ -142,6 +144,8 @@ function callApiGet(url, callback){
         if(xhr.status == 200){
             console.log(xhr)
             callback(JSON.parse(xhr.response));
+        } else if(xhr.status == 405) {
+            goHome()
         } else {
             //TODO: tratar os possíveis erros
             alert("ERRO: "+xhr.status);

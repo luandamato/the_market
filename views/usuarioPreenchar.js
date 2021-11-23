@@ -297,6 +297,17 @@ function callApiGet(url, callback){
     xhr.onload = function(){
         if(xhr.status == 200){
             callback(JSON.parse(xhr.response));
+        } else if(xhr.status == 405) {
+            
+            var home = window.location.href.charAt( window.location.href.length-1) == "/";
+            var isHome = window.location.href.toLowerCase().includes("home")
+            if (JSON.parse(xhr.response).direcionar == "home" && home == false && isHome == false) {
+                goHome()
+            }
+            else{
+                goLogin()
+            }
+            saveData("username", "");
         } else {
             //TODO: tratar os possíveis erros
             alert("ERRO: "+xhr.status + "\n"+url);
